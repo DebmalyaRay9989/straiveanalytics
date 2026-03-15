@@ -1,9 +1,20 @@
-
-
+# STRAIVE Pricing Platform v5.0 – Cloud-Light Dependencies
+#
+# Removed vs v4.1:
+#   - xgboost           (heavy C build, ~200 MB; replaced with sklearn linear models)
+#   - selenium          (requires Chrome/Chromium binary, not available on PaaS)
+#   - redis             (requires separate Redis service; scraping disabled)
+#   - lxml              (heavy C build; only needed for web scraping)
+#   - beautifulsoup4    (only needed for web scraping)
+#   - urllib3           (transitive; pulled in by requests if needed)
+#   - reportlab         (PDF generation removed; saves ~30 MB + C extensions)
+#   - scipy.stats.qmc   (Sobol; replaced with plain numpy random)
+#
+# scipy is kept for minimize_scalar (pricing optimiser) and norm (CI).
+# statsmodels is kept for OLS elasticity + ExponentialSmoothing forecast.
 
 dash>=2.17.1
 dash-bootstrap-components>=1.6.0
-dash-ag-grid>=2.4.0
 plotly>=5.22.0
 
 pandas>=2.2.2
@@ -12,16 +23,10 @@ scipy>=1.13.1
 
 scikit-learn>=1.5.2
 statsmodels>=0.14.2
-xgboost>=2.1.1
 
 requests>=2.32.3
-beautifulsoup4>=4.12.3
-lxml>=5.3.0
-urllib3>=2.2.3
-
-reportlab>=4.2.2
-gunicorn
 
 python-dateutil>=2.9.0.post0
 pytz>=2024.2
-xgboost>=2.1.1
+
+gunicorn
